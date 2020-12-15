@@ -5,7 +5,7 @@
 ' The total stock volume of the stock.
 
 ' This script works on multiple sheets
-Sub ticker_symbol()
+Sub ticker_symbol_basic()
 
     ' Add a sheet named "Combined Data"
     Sheets.Add.Name = "Combined_Data"

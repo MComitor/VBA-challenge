@@ -38,7 +38,7 @@ Sub ticker_symbol()
   Dim percent_change As Double
   
   ' Set an initial variable for holding the total per credit card brand
-  Dim stock_vol As Double
+  Dim stock_vol As Long
   stock_vol = 0
 
   lastRow = Cells(Rows.Count, 1).End(xlUp).Row
@@ -55,56 +55,56 @@ Sub ticker_symbol()
   Dim Summary_Table_Row As Integer
   Summary_Table_Row = 2
   
-  ' Loop through all stock market ticker symbols
-  For i = 2 To lastRow
-    
-    ' Check if we are still within the same ticker symbol, if it is not...
-    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+    ' Loop through all stock market ticker symbols
+    For i = 2 To lastRow
       
-      ' Set the ticker symbol name
-      ticker_symbol = Cells(i, 1).Value
-      
-      ' Add  the total stock volume by unique symbol
-      stock_vol = stock_vol + Cells(i, 7).Value
-            
-      ' Print the ticker symbol in the Summary Table
-      Range("I" & Summary_Table_Row).Value = ticker_symbol
-      
-      ' Print the stock volume amount to the Summary Table
-      Range("L" & Summary_Table_Row).Value = stock_vol
-      
-      ' Print the yearly change in the Summary table
-      Range("J" & Summary_Table_Row).Value = yearly_change
-      
-      ' Print the % change in the Summary Table
-      Range("K" & Summary_Table_Row).Value = percent_change
-      
-      ' Add one to the summary table row
-      Summary_Table_Row = Summary_Table_Row + 1
-      
-      ' Reset all running tallies to zero
-      stock_vol = 0
-      open_rate = 0
-      close_rate = 0
+      ' Check if we are still within the same ticker symbol, if it is not...
+      If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+        
+        ' Set the ticker symbol name
+        ticker_symbol = Cells(i, 1).Value
+        
+        ' Add  the total stock volume by unique symbol
+        stock_vol = stock_vol + Cells(i, 7).Value
+              
+        ' Print the ticker symbol in the Summary Table
+        Range("I" & Summary_Table_Row).Value = ticker_symbol
+        
+        ' Print the stock volume amount to the Summary Table
+        Range("L" & Summary_Table_Row).Value = stock_vol
+        
+        ' Print the yearly change in the Summary table
+        Range("J" & Summary_Table_Row).Value = yearly_change
+        
+        ' Print the % change in the Summary Table
+        Range("K" & Summary_Table_Row).Value = percent_change
+        
+        ' Add one to the summary table row
+        Summary_Table_Row = Summary_Table_Row + 1
+        
+        ' Reset all running tallies to zero
+        stock_vol = 0
+        open_rate = 0
+        close_rate = 0
 
-    ' If the cell immediately following a row is the same ticker symbol...
-    Else
+      ' If the cell immediately following a row is the same ticker symbol...
+      Else
     
-      ' Add to the stock volume total
-      stock_vol = stock_vol + Cells(i, 7).Value
-      open_rate = open_rate + Cells(i, 3).Value
-      close_rate = close_rate + Cells(i, 6).Value
-      yearly_change = close_rate - open_rate
-      ' percent_change = some text
+        ' Add to the stock volume total
+        stock_vol = stock_vol + Cells(i, 7).Value
+        open_rate = open_rate + Cells(i, 3).Value
+        close_rate = close_rate + Cells(i, 6).Value
+        yearly_change = close_rate - open_rate
+        ' percent_change = some text
+      
+      End If
     
-    End If
-  
   Next i
   
     ' Copy the headers from sheet 1
     combined_sheet.Range("A1:G1").Value = Sheets(2).Range("A:G").Value
     
     ' Autofit to display data
-    combined_sheet.Columns("A:G").AutoFit
+    combined_sheet.Columns("A:K").AutoFit
       
 End Sub

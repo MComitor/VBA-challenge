@@ -99,5 +99,4 @@ Sub ticker_symbol_easy()
     maxDecrease = Application.WorksheetFunction.Max(Range("K:K"))
     maxVolume = Application.WorksheetFunction.Max(Range("L:L"))
 
-
 End Sub

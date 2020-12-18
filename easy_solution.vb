@@ -1,4 +1,4 @@
-Sub ticker_symbol()
+Sub ticker_symbol_easy()
 
     ' Set initial variables to hold all the things
     Dim ticker_symbol As String
@@ -55,26 +55,26 @@ Sub ticker_symbol()
       ' If the cell immediately following a row is the same ticker symbol...
       Else
     
-        ' Add to the stock volume total
+        ' Add to running tallies
         stock_vol = stock_vol + Cells(i, 7).Value
         yearly_change = Cells(i, 6) - Cells(i, 3).Value
         percent_change = Round((yearly_change / Cells(i, 3) * 100), 2)
       
-      End If
+      'End If
       
-        'For x = 2 To lastSummaryRow
+        For x = 2 To lastSummaryRow
         
-              'Conditional formatting for yearly change
+              'If yearly change value is 0 or greater, turn the cell green
                 If Cells(i, 10).Value >= 0 Then
                     Cells(i, 10).Interior.ColorIndex = 4
                     
-                'Otherwise turn them...
+                'Otherwise turn the cell red
                 ElseIf Cells(i, 10).Value < 0 Then
                     Cells(i, 10).Interior.ColorIndex = 3
                     
                 End If
-        'Next x
-    
+        Next x
+      End If
     Next i
     
     Dim maxIncreaseTicker As String

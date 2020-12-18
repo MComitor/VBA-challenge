@@ -28,26 +28,26 @@ Sub ticker_symbol_moderate()
         ' Copy the contents of each state sheet into the combined sheet
         combined_sheet.Range("A" & lastRow & ":G" & ((lastRowTicker - 1) + lastRow)).Value = ws.Range("A2:G" & (lastRowState + 1)).Value
 
-  ' Set variable to hold all the things
-  Dim ticker_symbol As String
-  Dim yearly_change As Double
-  Dim percent_change As Double
-  Dim stock_vol As LongLong
-  stock_vol = 0
+        ' Set variables for all the things we need to work with
+        Dim ticker_symbol As String
+        Dim yearly_change As Double
+        Dim percent_change As Double
+        Dim stock_vol As LongLong
+        stock_vol = 0
 
-  ' Get last rows of sheet and summary table row
-  lastRow = Cells(Rows.Count, 1).End(xlUp).Row
-  lastSummaryRow = Cells(Rows.Count, 9).End(xlUp).Row
+        ' Get last rows of sheet and summary table row
+        lastRow = Cells(Rows.Count, 1).End(xlUp).Row
+        lastSummaryRow = Cells(Rows.Count, 9).End(xlUp).Row
 
-     ' Create locations for the summary table column headers
-      Range("I1") = "Ticker"
-      Range("J1") = "Yearly Change"
-      Range("K1") = "Percent Change"
-      Range("L1") = "Total Stock Volume"
-   
-  ' Keep track of the location for each ticker symbol in the summary table
-  Dim Summary_Table_Row As Long
-  Summary_Table_Row = 2
+          ' Create locations to hold all the things
+            Range("I1") = "Ticker"
+            Range("J1") = "Yearly Change"
+            Range("K1") = "Percent Change"
+            Range("L1") = "Total Stock Volume"
+          
+        ' Keep track of the location for each ticker symbol  in the summary table
+        ' Dim Summary_Table_Row As Long
+        Summary_Table_Row = 2
   
     ' Loop through all stock market ticker symbols
     For i = 2 To lastRow
@@ -55,15 +55,19 @@ Sub ticker_symbol_moderate()
       ' Check if we are still within the same ticker symbol, if it is not...
       If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
         
-        ' Add Ticker Symbol Name to summary table
+        ' Set the ticker symbol name
         ticker_symbol = Cells(i, 1).Value
-        Range("I" & Summary_Table_Row).Value = ticker_symbol
-
-        ' Add Total Stock Volume to summary table
+        
+        ' Add  the total stock volume by unique symbol
         stock_vol = stock_vol + Cells(i, 7).Value
+              
+        ' Print the ticker symbol in the Summary Table
+        Range("I" & Summary_Table_Row).Value = ticker_symbol
+        
+        ' Print the stock volume amount to the Summary Table
         Range("L" & Summary_Table_Row).Value = stock_vol
-
-        ' Add Yearly Change to Summary table
+        
+        ' Print the yearly change in the Summary table
         Range("J" & Summary_Table_Row).Value = Round(yearly_change, 2)
         
         ' Print the % change in the Summary Table
@@ -78,26 +82,20 @@ Sub ticker_symbol_moderate()
             Else
 
               ' If the cell immediately following a row is the same ticker symbol...
-              ' Add to the stock volume total
-              ' open_rate = open_rate + Cells(i, 3).Value
-              ' close_rate = close_rate + Cells(i, 6).Value
               stock_vol = stock_vol + Cells(i, 7).Value
               yearly_change = Cells(i, 6) - Cells(i, 3)
               percent_change = Round((yearly_change / Cells(i, 3) * 100), 2)
-            
 
-            If yearly_change < 0 Then
-                      Cells(i, 10).Interior.ColorIndex = 3
-                  
-                  Else 
-                      Cells(i, 10).Interior.ColorIndex = 4
-                  
-                  End If
+                For x = 2 to lastSummaryRow
+                  If yearly_change < 0 Then
+                            Cells(i, 10).Interior.ColorIndex = 3
+                        
+                        Else
+                            Cells(i, 10).Interior.ColorIndex = 4
+                        End If
+                Next x
             End If
-          
-        Next i
-
-      Next ws
+     Next i
 
   Dim maxIncreaseTicker As String
   Cells(1, 16) = maxIncreaseTicker
@@ -122,7 +120,7 @@ Sub ticker_symbol_moderate()
     maxDecrease = Application.WorksheetFunction.Max(Range("K:K"))
     maxVolume = Application.WorksheetFunction.Max(Range("L:L"))
   
-Next ws  
+Next ws
     ' Copy the headers from sheet 1
     combined_sheet.Range("A1:G1").Value = Sheets(2).Range("A:G").Value
     
@@ -130,3 +128,4 @@ Next ws
     combined_sheet.Columns("A:K").AutoFit
       
 End Sub
+

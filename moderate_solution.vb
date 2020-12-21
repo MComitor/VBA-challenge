@@ -1,10 +1,3 @@
-' Create a script that will loop through all the stocks for one year and output the following information.
-' The ticker symbol.
-' Yearly change from opening price at the beginning of a given year to the closing price at the end of that year.
-' The percent change from opening price at the beginning of a given year to the closing price at the end of that year.
-' The total stock volume of the stock.
-
-' This script works on multiple sheets
 Sub ticker_symbol_moderate()
 
     ' Add a sheet named "Combined Data"
@@ -85,13 +78,14 @@ Sub ticker_symbol_moderate()
                           Cells(Summary_Table_Row, 10).Interior.ColorIndex = 4
                       
                       End If
-                End If
 
                   Else
                   ' If the cell immediately following a row is the same ticker symbol calculate running tallies
                   stock_vol = stock_vol + Cells(i, 7).Value
                   yearly_change = Cells(i, 6) - Cells(i, 3)
                   percent_change = Round((yearly_change / Cells(i, 3) * 100), 2)
+                  
+                  End If
 
         Next i
 
@@ -126,4 +120,3 @@ Next ws
     combined_sheet.Columns("A:G").AutoFit
       
 End Sub
-

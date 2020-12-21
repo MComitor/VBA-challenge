@@ -6,6 +6,8 @@ Sub ticker_symbol_easy()
     Dim percent_change As Double
     Dim stock_vol As LongLong
     stock_vol = 0
+    percent_change = 0
+    yearly_change = 0
       
     ' Create locations for the output data of all the things
     Range("I1") = "Ticker"
@@ -31,7 +33,7 @@ Sub ticker_symbol_easy()
         ' Set the ticker symbol name
         ticker_symbol = Cells(i, 1).Value
         
-        ' Add  the total stock volume by unique symbol
+        ' Add  the total stock volume
         stock_vol = stock_vol + Cells(i, 7).Value
               
         ' Print the ticker symbol in the Summary Table
@@ -45,6 +47,16 @@ Sub ticker_symbol_easy()
         
         ' Print the stock volume amount to the Summary Table
         Range("L" & Summary_Table_Row).Value = stock_vol
+                      
+        'If yearly change value is 0 or greater, turn the cell green
+        If Cells(Summary_Table_Row, 10).Value >= 0 Then
+            Cells(Summary_Table_Row, 10).Interior.ColorIndex = 4
+            
+        'Otherwise turn the cell red
+        ElseIf Cells(Summary_Table_Row, 10).Value < 0 Then
+            Cells(Summary_Table_Row, 10).Interior.ColorIndex = 3
+            
+        End If
         
         ' Add one to the summary table row
         Summary_Table_Row = Summary_Table_Row + 1
@@ -54,27 +66,12 @@ Sub ticker_symbol_easy()
 
       ' If the cell immediately following a row is the same ticker symbol...
       Else
-    
         ' Add to running tallies
         stock_vol = stock_vol + Cells(i, 7).Value
         yearly_change = Cells(i, 6) - Cells(i, 3).Value
         percent_change = Round((yearly_change / Cells(i, 3) * 100), 2)
-      
-      'End If
-      
-        For x = 2 To lastSummaryRow
-        
-              'If yearly change value is 0 or greater, turn the cell green
-                If Cells(i, 10).Value >= 0 Then
-                    Cells(i, 10).Interior.ColorIndex = 4
-                    
-                'Otherwise turn the cell red
-                ElseIf Cells(i, 10).Value < 0 Then
-                    Cells(i, 10).Interior.ColorIndex = 3
-                    
-                End If
-        Next x
       End If
+
     Next i
     
     Dim maxIncreaseTicker As String
@@ -100,3 +97,4 @@ Sub ticker_symbol_easy()
     maxVolume = Application.WorksheetFunction.Max(Range("L:L"))
 
 End Sub
+

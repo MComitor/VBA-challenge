@@ -1,4 +1,4 @@
-Sub ticker_symbol_easy()
+Sub ticker_symbol_easy() 
 
     ' Set initial variables to hold all the things
     Dim ticker_symbol As String

@@ -1,4 +1,4 @@
-### VBA-challenge ###
+### vba-challenge ###
 
 Lots of challenges with this exercise! 
 
